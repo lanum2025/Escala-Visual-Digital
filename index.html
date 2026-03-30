@@ -3,236 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Escala de Fome</title>
+  <title>Escala Visual Digital</title>
   <link rel="icon" type="image/png" href="nutricao.png">
+  
+  <link rel="stylesheet" href="style.css">
 
-  <!-- Novo SDK do EmailJS -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      padding: 20px;
-      background: linear-gradient(135deg, #e0f7da, #a8e6cf, #81c784);
-    }
-
-    .container {
-      max-width: 600px;
-      margin: 50px auto;
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
-      font-size: 28px;
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-      padding-bottom: 18px;
-      border-bottom: 1.5px dashed #c8e6c9;
-    }
-
-    .form-group:last-child {
-      border-bottom: none;
-    }
-
-    label {
-      font-size: 18px;
-      margin-bottom: 5px;
-      display: block;
-      color: #333;
-      transition: color 0.2s;
-    }
-
-    /* Estilo para os títulos das escalas */
-    .scale-header label {
-      font-size: 18px;
-      font-weight: 500;
-      color: #333;
-      display: block;
-    }
-
-    .scale-subtext {
-      font-size: 16px;
-      color: #333;
-      display: block;
-      margin-top: 4px;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 12px;
-      margin-top: 8px;
-      border-radius: 6px;
-      border: 1px solid #ddd;
-      font-size: 16px;
-      transition: border-color 0.3s, box-shadow 0.3s, background 0.2s;
-      background: #fff;
-    }
-
-    input:focus, select:focus {
-      border-color: #00ff88;
-      outline: none;
-      box-shadow: 0 0 0 3px #b2f5ea44;
-      background: #f8fffa;
-    }
-
-    input[type="range"] {
-      transition: background 0.3s, box-shadow 0.3s;
-    }
-
-    input[type="range"]:hover {
-      background: #ddd;
-    }
-
-    input[type="range"]:focus {
-      box-shadow: 0 0 0 3px #b2f5ea44;
-    }
-
-    input[type="text"]:hover,
-    select:hover {
-      background: #f1fff7;
-      border-color: #81c784;
-    }
-
-    button {
-      background-color: #000000;
-      color: white;
-      padding: 14px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 20px;
-      font-size: 16px;
-      transition: background-color 0.3s, transform 0.2s;
-    }
-
-    button:hover {
-      background-color: #00ff88;
-      color: #222;
-      transform: scale(1.02);
-    }
-
-    #resposta {
-      display: none;
-      margin-top: 20px;
-      padding: 15px;
-      background: #d4edda;
-      color: #155724;
-      border-left: 5px solid #28a745;
-    }
-
-    #resposta h2 {
-      font-size: 24px;
-    }
-
-    .slider-container {
-      position: relative;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .slider-container input[type="range"] {
-      width: 100%;
-      margin: 10px 0;
-      -webkit-appearance: none;
-      appearance: none;
-      height: 8px;
-      border-radius: 5px;
-      background: #ddd;
-      transition: background 0.3s, box-shadow 0.3s;
-    }
-
-    .slider-container input[type="range"]:hover {
-      background: #ddd;
-    }
-
-    .slider-container input[type="range"]:focus {
-      box-shadow: 0 0 0 3px #b2f5ea44;
-    }
-
-    .slider-container input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #00ff88;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-    }
-
-    .slider-container input[type="range"]:hover::-webkit-slider-thumb {
-      background: #1de9b6;
-      transform: scale(1.08);
-    }
-
-    .slider-container input[type="range"]:focus::-webkit-slider-thumb {
-      background: #1de9b6;
-      box-shadow: 0 0 0 3px #b2f5ea44;
-    }
-
-    .slider-container input[type="range"]::-moz-range-thumb {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #00ff88;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-    }
-
-    .slider-container input[type="range"]:hover::-moz-range-thumb {
-      background: #1de9b6;
-      transform: scale(1.08);
-    }
-
-    .slider-container input[type="range"]:focus::-moz-range-thumb {
-      background: #1de9b6;
-      box-shadow: 0 0 0 3px #b2f5ea44;
-    }
-
-    .slider-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      color: #333;
-      margin-top: 2px;
-    }
-
-    /* Remover o valor acima do slider */
-    .slider-value {
-      display: none;
-    }
-
-    /* Remover o degradê/efeito colorido ao passar o mouse no slider */
-    .slider-container input[type="range"]:hover {
-      background: #ddd;
-    }
-
-    /* Animação suave no h1 ao passar o mouse */
-    h1.text-center {
-      transition: transform 0.25s cubic-bezier(.4,2,.6,1), color 0.2s;
-      will-change: transform;
-    }
-    h1.text-center:hover {
-      transform: scale(1.045);
-      color: #00c97b;
-    }
-  </style>
 </head>
 <body>
 
+   <div id="modalTermos" class="modal-overlay">
+  <div class="modal-content">
+    <h2>Instruções e Termos</h2>
+    <div class="modal-body">
+      <p>Antes de responder, leia atentamente as instruções abaixo:</p>
+      <ul style="text-align: left; line-height: 1.6;">
+        <li><strong>Gire o celular:</strong> Use na posição horizontal para visualizar as escalas corretamente.</li>
+        <li><strong>Responda com calma:</strong> Pense em como você se sente exatamente neste momento.</li>
+        <li><strong>Deslize o marcador:</strong> Arraste o ponto ao longo da linha até onde melhor representa sua sensação.</li>
+      </ul>
+      <p style="font-size: 13px; color: #666; margin-top: 15px;">
+        Ao clicar em "Aceito e iniciar", você confirma que leu e compreendeu as instruções e autoriza o uso dos dados para fins nutricionais.
+      </p>
+    </div>
+    <button type="button" id="btnAceitar" onclick="aceitarTermos()">Aceito e iniciar</button>
+  </div>
+</div>
+
+
+
   <div class="container" id="formContainer">
-    <h1 class="text-center">Escala Visual Digital de Apetite</h1>
+    <h1 class="text-center">Escala de Visual Digital</h1>
 
     <form id="fomeForm">
       <div class="form-group">
@@ -240,95 +41,45 @@
         <input type="text" id="nome" placeholder="Digite seu nome" required>
       </div>
 
-      <!-- Escala de Fome -->
-      <div class="form-group">
-        <div class="scale-header">
-          <label for="fome">Escala de Fome</label>
-          <span class="scale-subtext">Quanta fome você sente agora?</span>
-        </div>
-        <div class="slider-container">
-          <div class="slider-value" id="fomeValue">45</div>
-          <input type="range" id="fome" min="0" max="100" step="0.1" value="45" required oninput="document.getElementById('fomeValue').textContent = this.value">
-          <div class="slider-labels">
-            <span>Nada/Nenhuma</span>
-            <span>Excessiva(o)</span>
-          </div>
-        </div>
-      </div>
+    <div class="form-group">
+        <label for="ultimaRefeicao">Quando foi sua última refeição?</label>
+        <select id="ultimaRefeicao" required>
+            <option value="" disable selected>---</option>
+            <option value="Acabei de realizar">Acabei de realizar</option>
+            <option value="Jejum de 12 horas">Jejum de 12 horas</option>
+            <option value="60 minutos">60 minutos</option>
+            <option value="120 minutos">120 minutos</option>
+            <option value="180 minutos">180 minutos</option>
+            <option value="240 minutos">240 minutos</option>
+        </select>
+    </div>
 
-      <!-- Escala de Plenitude -->
-      <div class="form-group">
-        <div class="scale-header">
-          <label for="cheio">Escala de Plenitude</label>
-          <span class="scale-subtext">Quão cheio você se sente agora?</span>
-        </div>
-        <div class="slider-container">
-          <div class="slider-value" id="cheioValue">45</div>
-          <input type="range" id="cheio" min="0" max="100" step="0.1" value="45" required oninput="document.getElementById('cheioValue').textContent = this.value">
-          <div class="slider-labels">
-            <span>Nada/Nenhuma</span>
-            <span>Excessiva(o)</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Escala de Satisfação -->
-      <div class="form-group">
-        <div class="scale-header">
-          <label for="desejoComer">Escala de Satisfação</label>
-          <span class="scale-subtext">Quanto você quer comer agora?</span>
-        </div>
-        <div class="slider-container">
-          <div class="slider-value" id="desejoComerValue">45</div>
-          <input type="range" id="desejoComer" min="0" max="100" step="0.1" value="45" required oninput="document.getElementById('desejoComerValue').textContent = this.value">
-          <div class="slider-labels">
-            <span>Nada/Nenhuma</span>
-            <span>Excessiva(o)</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Escala de Capacidade de Comer -->
-      <div class="form-group">
-        <div class="scale-header">
-          <label for="consegueComer">Escala de Capacidade de Comer</label>
-          <span class="scale-subtext">Quanto você acha que pode comer agora?</span>
-        </div>
-        <div class="slider-container">
-          <div class="slider-value" id="consegueComerValue">45</div>
-          <input type="range" id="consegueComer" min="0" max="100" step="0.1" value="45" required oninput="document.getElementById('consegueComerValue').textContent = this.value">
-          <div class="slider-labels">
-            <span>Nada/Nenhuma</span>
-            <span>Excessiva(o)</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Escala de Prazerosa (visível condicionalmente) -->
+    <!-- Escala de Prazerosa (visível condicionalmente) -->
       <div class="form-group" id="prazerosaContainer" style="display: none;">
         <div class="scale-header">
-          <label for="prazerosa">Escala de Prazer</label>
-          <span class="scale-subtext">Quão prazerosa foi essa refeição?</span>
+          <label for="prazerosa">Quão prazerosa foi essa refeição?</label>
+          <span class="scale-explanation">Pense na satisfação e no prazer sensorial que você sentiu ao comer esses alimentos.</span>
         </div>
         <div class="slider-container">
-          <div class="slider-value" id="prazerosaValue">45</div>
-          <input type="range" id="prazerosa" min="0" max="100" step="0.1" value="45" oninput="document.getElementById('prazerosaValue').textContent = this.value">
+          <div class="slider-value" id="prazerosaValue">50</div>
+          <input type="range" id="prazerosa" min="0" max="100" step="0.1" value="50" oninput="document.getElementById('prazerosaValue').textContent = this.value">
           <div class="slider-labels">
             <span>Nada/Nenhuma</span>
-            <span>Excessiva</span>
+            <span>Excessiva(o)</span>
           </div>
         </div>
       </div>
+
 
       <!-- Escala de Familiaridade (visível condicionalmente) -->
       <div class="form-group" id="familiarContainer" style="display: none;">
         <div class="scale-header">
-          <label for="familiar">Escala de Familiaridade</label>
-          <span class="scale-subtext">Quão familiar foi essa refeição?</span>
+          <label for="familiar">Quão familiar foi essa refeição?</label>
+          <span class="scale-explanation">Pense no quanto você está acostumado com esses alimentos e com o sabor dessa preparação.</span>
         </div>
         <div class="slider-container">
-          <div class="slider-value" id="familiarValue">45</div>
-          <input type="range" id="familiar" min="0" max="100" step="0.1" value="45" oninput="document.getElementById('familiarValue').textContent = this.value">
+          <div class="slider-value" id="familiarValue">50</div>
+          <input type="range" id="familiar" min="0" max="100" step="0.1" value="50" oninput="document.getElementById('familiarValue').textContent = this.value">
           <div class="slider-labels">
             <span>Nada/Nenhuma</span>
             <span>Excessiva(o)</span>
@@ -336,171 +87,66 @@
         </div>
       </div>
 
+    <div id="perguntasPadrao">
       <div class="form-group">
-        <label for="ultimaRefeicao">Quando foi sua última refeição?</label>
-        <select id="ultimaRefeicao" required>
-          <option value="Jejum de 12 horas">Jejum de 12 horas</option>
-          <option value="30 minutos">30 minutos</option>
-          <option value="60 minutos">60 minutos</option>
-          <option value="90 minutos">90 minutos</option>
-          <option value="120 minutos">120 minutos</option>
-          <option value="180 minutos">180 minutos</option>
-          <option value="Pré-almoço (240 minutos)">Pré-almoço (240 minutos)</option>
-          <option value="Pré-jantar (240 minutos)">Pré-jantar(240 minutos)</option>
-        </select>
+        <label>Quanta fome você sente agora?</label>
+        <span class="scale-explanation">Pense na sensação física de estômago vazio ou necessidade de comer. </span>
+        <div class="slider-container">
+          <div class="slider-value" id="fomeValue">50</div>
+          <input type="range" id="fome" min="0" max="100" step="0.1" value="50" required oninput="document.getElementById('fomeValue').textContent = this.value">
+          <div class="slider-labels"><span>Nada</span><span>Excessiva(o)</span></div>
+        </div>
       </div>
+
+      <div class="form-group">
+        <label>Quão cheio você se sente agora?</label>
+        <span class="scale-explanation">Pense no quanto seu estômago está cheio neste momento.</span>
+        <div class="slider-container">
+          <div class="slider-value" id="cheioValue">50</div>
+          <input type="range" id="cheio" min="0" max="100" step="0.1" value="50" required oninput="document.getElementById('cheioValue').textContent = this.value">
+          <div class="slider-labels"><span>Nada</span><span>Excessiva(o)</span></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Quanto você quer comer agora?</label>
+        <span class="scale-explanation">Pense no quanto você gostaria de comer algo agora.</span>
+        <div class="slider-container">
+          <div class="slider-value" id="desejoComerValue">50</div>
+          <input type="range" id="desejoComer" min="0" max="100" step="0.1" value="50" required oninput="document.getElementById('desejoComerValue').textContent = this.value">
+          <div class="slider-labels"><span>Nada</span><span>Excessiva(o)</span></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Quanto você acha que pode comer agora?</label>
+        <span class="scale-explanation">Pense na quantidade de comida que ainda caberia no seu estômago.</span>
+        <div class="slider-container">
+          <div class="slider-value" id="consegueComerValue">50</div>
+          <input type="range" id="consegueComer" min="0" max="100" step="0.1" value="50" required oninput="document.getElementById('consegueComerValue').textContent = this.value">
+          <div class="slider-labels"><span>Nada</span><span>Excessiva(o)</span></div>
+        </div>
+      </div>
+    </div>
 
       <div class="form-group">
         <label for="tipoRefeicao">Qual foi sua última refeição?</label>
         <select id="tipoRefeicao" required>
           <option value="Café da manhã">Café da manhã</option>
           <option value="Almoço">Almoço</option>
-          <option value="Jantar">Jantar</option>
         </select>
-      </div>
-
-      <!-- Perguntas novas -->
-      <div class="form-group" id="prazerosaContainer" style="display: none;">
-        <label for="prazerosa">Quão prazerosa foi essa refeição?</label>
-        <div class="slider-container">
-          <input type="range" id="prazerosa" min="0" max="100" step="0.1" value="45">
-          <div class="slider-labels">
-            <span>Nada/Nenhuma</span>
-            <span>Excessiva</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group" id="familiarContainer" style="display: none;">
-        <label for="familiar">Quão familiar foi essa refeição?</label>
-        <div class="slider-container">
-          <input type="range" id="familiar" min="0" max="100" step="0.1" value="45">
-          <div class="slider-labels">
-            <span>Nada/Nenhuma</span>
-            <span>Excessiva(o)</span>
-          </div>
-        </div>
       </div>
 
       <button type="submit">Enviar Resposta</button>
     </form>
   </div>
 
-  <div id="resposta">
-    <h2>Resposta Enviada com Sucesso! ✅</h2>
-    <p><strong>Nome:</strong> <span id="nomeResposta"></span></p>
-    <p><strong>Quanto você está sentindo fome neste momento?</strong> <span id="fomeResposta">Respondido</span></p>
-    <p><strong>O quão cheio você se sente agora?</strong> <span id="cheioResposta">Respondido</span></p>
-    <p><strong>O quanto você deseja comer agora?</strong> <span id="desejoComerResposta">Respondido</span></p>
-    <p><strong>Quanto você acha que consegue comer agora?</strong> <span id="consegueComerResposta">Respondido</span></p>
-    <p><strong>Quando foi sua última refeição?</strong> <span id="ultimaRefeicaoResposta">Respondido</span></p>
-    <p><strong>Qual foi sua última refeição?</strong> <span id="tipoRefeicaoResposta">Respondido</span></p>
-    <!-- Respostas novas -->
-    <p><strong>Quão prazerosa foi sua refeição?</strong> <span id="prazerosaResposta">Respondido</span></p>
-    <p><strong>Quão familiar foi sua refeição?</strong> <span id="familiarResposta">Respondido</span></p>
-    <button onclick="recarregarPagina()">Responder Novamente</button>
+  <div id="resposta" class="text-center">
+    <h2>Sucesso! ✅</h2>
+    <p>Nome: <span id="nomeResposta"></span></p>
+    <button onclick="window.location.reload()">Nova Resposta</button>
   </div>
 
-  <script>
-    (function() {
-      emailjs.init("ymPrb8uXsA_vimgr-");
-    })();
-
-    document.getElementById('ultimaRefeicao').addEventListener('change', function() {
-      const ultimaRefeicao = this.value;
-      const prazerosaContainer = document.getElementById('prazerosaContainer');
-      const familiarContainer = document.getElementById('familiarContainer');
-
-      if (ultimaRefeicao === '30 minutos') {
-        prazerosaContainer.style.display = 'block';
-        familiarContainer.style.display = 'block';
-      } else {
-        prazerosaContainer.style.display = 'none';
-        familiarContainer.style.display = 'none';
-      }
-    });
-
-    document.getElementById('fomeForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  const nome = document.getElementById('nome').value.trim();
-  const fome = document.getElementById('fome').value;
-  const cheio = document.getElementById('cheio').value;
-  const desejoComer = document.getElementById('desejoComer').value;
-  const consegueComer = document.getElementById('consegueComer').value;
-  const ultimaRefeicao = document.getElementById('ultimaRefeicao').value;
-  const tipoRefeicao = document.getElementById('tipoRefeicao').value;
-  const prazerosa = ultimaRefeicao === '30 minutos' ? document.getElementById('prazerosa').value : "Não informado";
-  const familiar = ultimaRefeicao === '30 minutos' ? document.getElementById('familiar').value : "Não informado";
-
-  if (!nome) {
-    alert("Por favor, insira seu nome antes de enviar.");
-    return;
-  }
-
-  updateResponseView(nome, fome, cheio, desejoComer, consegueComer, ultimaRefeicao, tipoRefeicao, prazerosa, familiar);
-  sendEmail(nome, fome, cheio, desejoComer, consegueComer, ultimaRefeicao, tipoRefeicao, prazerosa, familiar);
-
-
-});
-
-
-    function updateResponseView(nome, fome, cheio, desejoComer, consegueComer, ultimaRefeicao, tipoRefeicao, prazerosa, familiar) {
-        document.getElementById('nomeResposta').textContent = nome;
-      document.getElementById('fomeResposta').textContent = "Respondido";
-      document.getElementById('cheioResposta').textContent = "Respondido";
-      document.getElementById('desejoComerResposta').textContent = "Respondido";
-      document.getElementById('consegueComerResposta').textContent = "Respondido";
-      document.getElementById('ultimaRefeicaoResposta').textContent = "Respondido";
-      document.getElementById('tipoRefeicaoResposta').textContent = "Respondido";
-
-  if (ultimaRefeicao === '30 minutos') {
-    document.getElementById('prazerosaResposta').textContent = "Respondido";
-    document.getElementById('familiarResposta').textContent = "Respondido";
-    document.getElementById('prazerosaResposta').parentElement.style.display = "block";
-    document.getElementById('familiarResposta').parentElement.style.display = "block";
-  } else {
-    document.getElementById('prazerosaResposta').parentElement.style.display = "none";
-    document.getElementById('familiarResposta').parentElement.style.display = "none";
-  }
-
-  document.getElementById('formContainer').style.display = 'none';
-  document.getElementById('resposta').style.display = 'block';
-}
-
-
-function sendEmail(nome, fome, cheio, desejoComer, consegueComer, ultimaRefeicao, tipoRefeicao, prazerosa, familiar) {
-    const templateParams = {
-    nome: nome,
-    fome: fome,
-    cheio: cheio,
-    desejo: desejoComer,
-    capacidade: consegueComer,
-    hora: ultimaRefeicao,
-    ultima: tipoRefeicao,
-    prazerosa: prazerosa !== null ? prazerosa : "Não informado",
-    familiar: familiar !== null ? familiar : "Não informado"
-};
-
-// Exibir no console antes de enviar
-console.log("Enviando email com os seguintes dados:", templateParams);
-
-emailjs.send('service_l5eds5p', 'template_nuppf1f', templateParams)
-
-    .then(response => {
-        console.log("Sucesso!", response);
-    })
-    .catch(error => {
-        console.error("Erro ao enviar email:", error);
-    });
-
-}
-
-
-
-    function recarregarPagina() {
-      window.location.reload();
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

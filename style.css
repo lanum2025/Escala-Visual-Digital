@@ -1,0 +1,323 @@
+    body {
+      font-family: 'Roboto', sans-serif;
+      padding: 20px;
+      background: linear-gradient(135deg, #d3eccd, #a8e6cf, #31a07f);
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-sizing:border-box;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+
+    .form-group {
+      margin-bottom: 20px;
+      padding-bottom: 18px;
+      border-bottom: 1.5px dashed #c8e6c9;
+    }
+
+    .form-group:last-child {
+      border-bottom: none;
+    }
+
+    label {
+      font-size: 18px;
+      margin-bottom: 5px;
+      display: block;
+      color: #333;
+      transition: color 0.2s;
+    }
+
+    /* Estilo para os títulos das escalas */
+    .scale-header label {
+      font-size: 18px;
+      font-weight: 500;
+      color: #333;
+      display: block;
+    }
+
+    .scale-subtext {
+      font-size: 16px;
+      color: #333;
+      display: block;
+      margin-top: 4px;
+    }
+
+    input, select {
+      width: 95%;
+      padding: 12px;
+      margin-top: 8px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      transition: border-color 0.3s, box-shadow 0.3s, background 0.2s;
+      background: #fff;
+    }
+
+    input:focus, select:focus {
+      border-color: #00ff88;
+      outline: none;
+      box-shadow: 0 0 0 3px #b2f5ea44;
+      background: #f8fffa;
+    }
+
+    input[type="range"] {
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    input[type="range"]:hover {
+      background: #ddd;
+    }
+
+    input[type="range"]:focus {
+      box-shadow: 0 0 0 3px #b2f5ea44;
+    }
+
+    input[type="text"]:hover,
+    select:hover {
+      background: #f1fff7;
+      border-color: #81c784;
+    }
+
+    button {
+      background-color: #000000;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      font-size: 16px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #00ff88;
+      color: #222;
+      transform: scale(1.02);
+    }
+
+    #resposta {
+      display: none;
+      margin-top: 300px;
+      padding: 15px;
+      background: #d4edda;
+      color: #155724;
+      border-left: 5px solid #28a745;
+    }
+
+    #resposta h2 {
+      font-size: 24px;
+    }
+
+    .slider-container {
+      width: 100%;
+      margin: 15px 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .slider-container input[type="range"] {
+      width: 95%;
+      margin: 15px 0;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 8px;
+      border-radius: 6px;
+      background: #ddd;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .slider-container input[type="range"]:hover {
+      background: #ddd;
+    }
+
+    .slider-container input[type="range"]:focus {
+      box-shadow: 0 0 0 3px #b2f5ea44;
+    }
+
+    .slider-container input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #000000;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .slider-container input[type="range"]:hover::-webkit-slider-thumb {
+      background: #1de9b6;
+      transform: scale(1.08);
+    }
+
+    .slider-container input[type="range"]:focus::-webkit-slider-thumb {
+      background: #1de9b6;
+      box-shadow: 0 0 0 3px #b2f5ea44;
+    }
+
+    .slider-container input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #00ff88;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .slider-container input[type="range"]:hover::-moz-range-thumb {
+      background: #1de9b6;
+      transform: scale(1.08);
+    }
+
+    .slider-container input[type="range"]:focus::-moz-range-thumb {
+      background: #1de9b6;
+      box-shadow: 0 0 0 3px #b2f5ea44;
+    }
+
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #333;
+      margin-top: 2px;
+    }
+
+    /* Remover o valor acima do slider */
+    .slider-value {
+      display: none;
+    }
+
+    /* Remover o degradê/efeito colorido ao passar o mouse no slider */
+    .slider-container input[type="range"]:hover {
+      background: #ddd;
+    }
+
+    /* Animação suave no h1 ao passar o mouse */
+    h1.text-center {
+      transition: transform 0.25s cubic-bezier(.4,2,.6,1), color 0.2s;
+      will-change: transform;
+    }
+    h1.text-center:hover {
+      transform: scale(1.045);
+      color: #00c97b;
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            margin: 10px;
+            padding: 15px;
+        }
+    }
+
+    /* Pop-up de Termos */
+    .modal-overlay {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.7);
+        display: flex; justify-content: center; align-items: center;
+        z-index: 1000;
+    }
+    .modal-content {
+        background: white; padding: 25px; border-radius: 8px;
+        max-width: 500px; text-align: center;
+    }
+
+    /* Esconder telas */
+    .hidden { display: none; }
+
+    /* Explicação breve (Item 5) */
+    .scale-explanation {
+        font-size: 14px;
+        color: #666;
+        font-style: italic;
+        margin-bottom: 8px;
+    }
+
+    /* Overlay que escurece o fundo */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* Fundo preto transparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Fica acima de tudo */
+  backdrop-filter: blur(5px); /* Efeito de desfoque no fundo */
+}
+
+/* Caixa branca do Pop-up */
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.modal-body {
+  margin: 20px 0;
+  max-height: 300px;
+  overflow-y: auto; /* Se o texto for grande, cria scroll */
+  text-align: justify;
+  line-height: 1.6;
+  color: #333;
+  text-align: center;
+}
+
+#btnAceitar {
+  background-color: #00ff88;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  padding: 15px 25px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#btnAceitar:hover {
+  transform: scale(1.05);
+  background-color: #00c97b;
+}
+
+/* Aviso visual se o celular estiver em pé (Portrait) */
+@media screen and (max-width: 600px) and (orientation: portrait) {
+  #modalTermos::before {
+    content: "🔄 Por favor, vire o celular para o modo horizontal";
+    display: block;
+    background: #fff3cd;
+    color: #856404;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+  }
+}
+
+/* Começa escondido */
+#perguntasPadrao {
+    display: none;
+}
