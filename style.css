@@ -265,25 +265,40 @@
   backdrop-filter: blur(5px); /* Efeito de desfoque no fundo */
 }
 
-/* Caixa branca do Pop-up */
+/* Ajuste da Caixa do Pop-up */
 .modal-content {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  max-width: 500px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    
+    /* MÁGICA AQUI: Define altura máxima para não sumir na horizontal */
+    max-height: 85vh; 
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
+/* Ajuste do Corpo do Texto (Onde o Scroll vai agir) */
 .modal-body {
-  margin: 20px 0;
-  max-height: 300px;
-  overflow-y: auto; /* Se o texto for grande, cria scroll */
-  text-align: justify;
-  line-height: 1.6;
-  color: #333;
-  text-align: center;
+    margin: 15px 0;
+    text-align: justify;
+    line-height: 1.5;
+    color: #333;
+    
+    /* MÁGICA AQUI: Se o texto for maior que a tela, ele cria a barra de rolagem */
+    overflow-y: auto; 
+    padding-right: 10px; /* Espaço para a barra de rolagem não cobrir o texto */
+}
+
+/* Deixa a barra de rolagem do modal mais bonitinha (opcional) */
+.modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+.modal-body::-webkit-scrollbar-thumb {
+    background: #00ff88;
+    border-radius: 10px;
 }
 
 #btnAceitar {
