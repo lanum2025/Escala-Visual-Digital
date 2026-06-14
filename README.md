@@ -1,52 +1,58 @@
-**﻿Escala Visual Digital (EVD) - Protocolo de Percepção Alimentar**
-Este projeto é uma ferramenta digital avançada para a coleta de dados subjetivos sobre fome, desejo de comer e percepção de refeição. Ele foi desenvolvido com foco em UX (User Experience) clínica e precisão na coleta de dados nutricionais.
+**Escala Visual Digital (EVD)**
+Protocolo de Percepção Alimentar — LANUM UFAL
+Ferramenta digital para coleta de dados subjetivos sobre fome, desejo de comer e percepção pós-refeição, desenvolvida com foco em UX clínica e precisão na captura de dados nutricionais.
 
- Decisões de Projeto e Justificativas (Os "Porquês")
-1. Interface Sensorial Limpa (Sem Números)
-O quê: Os valores numéricos dos sliders (0 a 100) não são exibidos para o usuário final.
+**Visão Geral**
+A EVD digitaliza escalas analógicas de percepção alimentar, eliminando o ruído do papel e padronizando a coleta de dados para acompanhamento nutricional. O sistema foi projetado para minimizar vieses cognitivos e adaptar dinamicamente o formulário ao contexto temporal de cada participante.
 
-Por quê: Para evitar o viés de ancoragem. Quando o usuário vê um número, ele tende a racionalizar a resposta baseada em memórias anteriores. Sem números, a resposta é puramente baseada na sensação física imediata, garantindo um dado muito mais fiel à realidade subjetiva do momento.
+**Decisões de Projeto**
+1. Interface Sensorial — Sem Números Visíveis
+Os sliders vão de 0 a 100 internamente, mas os valores não são exibidos ao usuário.
 
-2. Revalidação de Consentimento e Instruções
-O quê: Um Pop-up (Modal) obrigatório que aparece em todas as sessões, sem salvar o aceite no navegador.
+Por quê? Evita o viés de ancoragem. Ao ver um número, o participante tende a racionalizar a resposta com base em sessões anteriores. Sem referência numérica, a resposta reflete a sensação física do momento — dado mais fiel à realidade subjetiva.
 
-Por quê: Segue rigorosos protocolos de ética em pesquisa e atendimento clínico (TCLE). Garante que o usuário sempre reconfirme a ciência sobre o uso dos dados e relembre a instrução crítica de usar o dispositivo na orientação horizontal para precisão da escala linear.
 
-3. Exclusividade de Contexto (Lógica de Exibição)
-O quê: O formulário é dinâmico. Se a última refeição foi "Imediata", as perguntas de fome somem e dão lugar às de Prazer e Familiaridade. Se a refeição foi há mais tempo, o foco volta para o Estado Metabólico (Fome, Desejo, Capacidade).
+2. Revalidação de Consentimento a Cada Sessão
+Um modal obrigatório é exibido em todas as sessões, sem salvar o aceite no navegador.
 
-Por quê: Reduz a fadiga de decisão. Perguntar "quanto você consegue comer" para alguém que acabou de realizar uma refeição é irrelevante e polui a coleta. O sistema filtra o que é importante para cada momento temporal.
+Por quê? Segue protocolos de ética em pesquisa clínica (TCLE). Garante que o participante reconfirme o uso dos dados e releia a instrução crítica de manter o dispositivo em modo paisagem (horizontal) para precisão da escala linear.
 
-4. Hierarquia Visual e Explicações Técnicas
-O quê: O título de cada seção é a própria pergunta, seguido de uma breve explicação técnica (ex: "Pense na sensação de estômago vazio").
 
-Por quê: Padroniza a interpretação. Diferentes pessoas podem entender "fome" de formas variadas; a explicação guia o participante para focar nos sinais fisiológicos, aumentando a acurácia dos dados coletados.
+3. Formulário Dinâmico por Contexto Temporal
+O formulário se adapta conforme o tempo da última refeição:
+SituaçãoPerguntas exibidasRefeição imediataPrazer e FamiliaridadeRefeição há mais tempoFome, Desejo e Capacidade
 
-🛠️ Detalhes Técnicos e Implementação
-Arquitetura de Software
-Frontend Modular: Divisão clara entre index.html (estrutura), style.css (estética) e script.js (comportamento).
+Por quê? Reduz a fadiga de decisão e elimina perguntas irrelevantes. Questionar "quanto você consegue comer?" logo após uma refeição polui a coleta. O sistema filtra o que é relevante para cada momento.
 
-Design Responsivo: Uso de larguras de 95% nos sliders para garantir alinhamento perfeito em diferentes tamanhos de tela, compensando paddings nativos de navegadores móveis.
 
-Segurança de Dados e Anti-Spam
-Trava de Botão: O botão de envio é desabilitado instantaneamente após o clique, mudando o texto para "Enviando...". Isso evita cobranças duplicadas na cota do EmailJS e duplicidade de registros no banco de dados.
+4. Explicações Técnicas por Escala
+Cada seção exibe a pergunta como título, acompanhada de uma breve instrução fisiológica (ex: "Pense na sensação de estômago vazio").
 
-Payload Inteligente: O script não envia "valores padrão" (como o 50 fixo) de perguntas que estavam escondidas. Se uma pergunta não foi feita, o sistema envia a etiqueta "N/A (Pós-refeição)" ou "Não informado", limpando o relatório final para o nutricionista.
+Por quê? Padroniza a interpretação. O termo "fome" pode ser entendido de formas diferentes; a instrução direciona o participante aos sinais fisiológicos corretos, aumentando a acurácia dos dados.
 
-📱 Guia de Uso para o Participante
-Acesso: O link abre o Modal de Termos e Instruções.
 
-Orientação: O celular deve estar no modo Paisagem (Horizontal).
+**Implementação Técnica**
+Arquitetura
+evd/
+├── index.html   # Estrutura e marcação
+├── style.css    # Estética e responsividade
+└── script.js    # Comportamento e lógica de envio
+Design responsivo: sliders com largura de 95% para alinhamento consistente em diferentes tamanhos de tela, compensando paddings nativos de navegadores móveis.
+Segurança e Integridade dos Dados
 
-Fluxo:
+Trava de botão: Desabilitado imediatamente após o clique (texto muda para "Enviando..."), evitando duplicidade de registros e cobranças duplas na cota do EmailJS.
+Payload inteligente: Perguntas não exibidas não enviam o valor padrão (50). O sistema registra "N/A (Pós-refeição)" ou "Não informado", mantendo o relatório limpo para o nutricionista.
 
-Preencha o nome.
 
-Selecione o tempo da última refeição (o formulário se adaptará automaticamente).
+**📱 Instruções de Uso**
 
-Responda deslizando os marcadores.
-
+Acesse o link → o modal de Termos e Instruções será exibido.
+Gire o celular para o modo paisagem (horizontal).
+Preencha seu nome e selecione o tempo da última refeição.
+O formulário se adaptará automaticamente.
+Deslize os marcadores de acordo com sua percepção no momento.
 Clique em "Enviar Resposta".
 
-👨‍💻 Créditos
-Solução desenvolvida para o projeto Estágio Conecta / Unimed Maceió, visando a modernização e digitalização de protocolos de acompanhamento nutricional.
+
+**👨‍💻 Créditos**
+Desenvolvido para o LANUM UFAL, com o objetivo de modernizar e digitalizar protocolos de acompanhamento nutricional clínico.
