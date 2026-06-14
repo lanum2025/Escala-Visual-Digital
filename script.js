@@ -24,7 +24,7 @@ document.getElementById('ultimaRefeicao').addEventListener('change', function() 
         perguntasPadrao.style.display = 'none';
     } 
     // 2. Acabou de comer -> Mostra prazer/familiar e esconde fome
-    else if (valor === 'Acabei de realizar' || valor === 'Imeditado') {
+    else if (valor === 'Jantar' || valor === 'Imediato') {
         prazerContainer.style.display = 'block';
         familiarContainer.style.display = 'block';
         perguntasPadrao.style.display = 'none';
@@ -34,6 +34,21 @@ document.getElementById('ultimaRefeicao').addEventListener('change', function() 
         prazerContainer.style.display = 'none';
         familiarContainer.style.display = 'none';
         perguntasPadrao.style.display = 'block';
+    }
+});
+
+// --- LÓGICA CONDICIONAL: PERGUNTA EXTRA PARA ALMOÇO ---
+document.getElementById('tipoRefeicao').addEventListener('change', function() {
+    const container = document.getElementById('almocoPerguntaContainer');
+    if (this.value === 'Almoço') {
+        container.style.display = 'block';
+        container.querySelectorAll('input[name="consumiuAlmoco"]').forEach(r => r.required = true);
+    } else {
+        container.style.display = 'none';
+        container.querySelectorAll('input[name="consumiuAlmoco"]').forEach(r => {
+            r.required = false;
+            r.checked = false;
+        });
     }
 });
 
@@ -48,13 +63,17 @@ document.getElementById('fomeForm').addEventListener('submit', function(event) {
     btn.textContent = "Enviando... aguarde";
 
     const timing = document.getElementById('ultimaRefeicao').value;
-    const isImediato = (timing === 'Acabei de realizar' || timing === 'Imeditado');
+    const isImediato = (timing === 'Jantar' || timing === 'Imeditado');
 
     // 1. Criamos o objeto com os dados básicos
     const dados = {
         nome: document.getElementById('nome').value,
         hora: timing,
-        ultima: document.getElementById('tipoRefeicao').value
+        ultima: document.getElementById('tipoRefeicao').value,
+        consumiuAlmoco: (function() {
+            const sel = document.querySelector('input[name="consumiuAlmoco"]:checked');
+            return sel ? sel.value : 'N/A';
+        })()
     };
 
     // 2. Filtramos as escalas baseado na escolha do usuário

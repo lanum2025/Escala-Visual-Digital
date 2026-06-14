@@ -45,7 +45,6 @@
         <label for="ultimaRefeicao">Quando foi sua última refeição?</label>
         <select id="ultimaRefeicao" required>
             <option value="" disable selected>---</option>
-            <option value="Acabei de realizar">Acabei de realizar</option>
             <option value="Jejum de 12 horas">Jejum de 12 horas</option>
             <option value="60 minutos">60 minutos</option>
             <option value="120 minutos">120 minutos</option>
@@ -134,7 +133,17 @@
         <select id="tipoRefeicao" required>
           <option value="Café da manhã">Café da manhã</option>
           <option value="Almoço">Almoço</option>
+          <option value="Jantar">Jantar</option>
         </select>
+      </div>
+
+      <!-- Pergunta condicional: aparece apenas quando "Almoço" for selecionado -->
+      <div class="form-group" id="almocoPerguntaContainer" style="display: none;">
+        <label>Você consumiu algum alimento ou bebida (exceto água) após o almoço?</label>
+        <div class="radio-group">
+          <label><input type="radio" name="consumiuAlmoco" value="Sim" required> Sim</label>
+          <label><input type="radio" name="consumiuAlmoco" value="Não"> Não</label>
+        </div>
       </div>
 
       <button type="submit">Enviar Resposta</button>

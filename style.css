@@ -55,7 +55,7 @@
       margin-top: 4px;
     }
 
-    input, select {
+    input:not([type="radio"]), select {
       width: 95%;
       padding: 12px;
       margin-top: 8px;
@@ -66,7 +66,7 @@
       background: #fff;
     }
 
-    input:focus, select:focus {
+    input:not([type="radio"]):focus, select:focus {
       border-color: #00ff88;
       outline: none;
       box-shadow: 0 0 0 3px #b2f5ea44;
@@ -89,6 +89,61 @@
     select:hover {
       background: #f1fff7;
       border-color: #81c784;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 9px;
+    }
+
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .radio-group input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #2e7d32;
+      cursor: pointer;
+      vertical-align: middle;
+      margin-top: 1px;
+      appearance: none;
+      -webkit-appearance: none;
+      border: 1px solid #000000;
+      border-radius: 50%;
+      background-color: white;
+      position: relative;
+    }
+
+    .radio-group input[type="radio"]:checked {
+      background-color: #34db3c;
+      border-color: #34db3c;
+    }
+
+    .radio-group input[type="radio"]:hover {
+      border-color: #34db3c;
+    }
+
+    .radio-group input[type="radio"]:checked:hover {
+      background-color: #34db3c;
+      border-color: #34db3c;
+    }
+
+    .radio-group input[type="radio"]:checked::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
     }
 
     button {
