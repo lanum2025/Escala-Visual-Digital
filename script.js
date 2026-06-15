@@ -63,7 +63,7 @@ document.getElementById('fomeForm').addEventListener('submit', function(event) {
     btn.textContent = "Enviando... aguarde";
 
     const timing = document.getElementById('ultimaRefeicao').value;
-    const isImediato = (timing === 'Jantar' || timing === 'Imeditado');
+    const isImediato = (timing === 'Jantar' || timing === 'Imediato');
 
     // 1. Criamos o objeto com os dados básicos
     const dados = {
