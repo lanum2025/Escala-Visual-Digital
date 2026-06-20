@@ -55,4 +55,4 @@ Clique em "Enviar Resposta".
 
 
 **👨‍💻 Créditos**
-Desenvolvido para o LANUM UFAL, com o objetivo de modernizar e digitalizar protocolos de acompanhamento nutricional clínico.
+Desenvolvido por Luan M. Tenório para o LANUM UFAL, com o objetivo de modernizar e digitalizar protocolos de acompanhamento nutricional clínico.
