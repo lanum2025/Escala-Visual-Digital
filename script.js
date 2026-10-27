@@ -5,36 +5,59 @@ function aceitarTermos() {
 }
 
 
-// --- INICIALIZAÇÃO EMAILJS ---
-(function() {
-    emailjs.init("ymPrb8uXsA_vimgr-");
-})();
+// --- ENVIO DE E-MAIL (WEB3FORMS COM CHAVE RESERVA) ---
+// Cole aqui as Access Keys geradas em web3forms.com (uma por e-mail).
+// Se a primeira estourar o limite, o código tenta a próxima automaticamente.
+const CHAVES_WEB3FORMS = [
+    "de056186-5d10-4c51-b7e7-7fea9bbd6826",
+    // "COLE_AQUI_A_CHAVE_2",
+];
+
+// Monta os campos do e-mail com as perguntas como rótulo, na ordem do template antigo.
+// O Web3Forms usa o nome de cada campo como título no e-mail.
+function camposEmail(d) {
+    return {
+        "Nome": d.nome,
+        "Quanto você está sentindo fome neste momento?": d.fome,
+        "O quão cheio você se sente agora?": d.cheio,
+        "O quanto você deseja comer agora?": d.desejo,
+        "Quanto você acha que consegue comer agora?": d.capacidade,
+        "Quando foi sua última refeição?": d.hora,
+        "Qual foi sua última refeição?": d.ultima,
+        "Consumiu algum alimento ou bebida após o almoço?": d.consumiuAlmoco
+    };
+}
+
+async function enviarEmail(dados) {
+    let ultimoErro = new Error("Nenhuma chave configurada");
+
+    for (const chave of CHAVES_WEB3FORMS) {
+        try {
+            const resposta = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                body: JSON.stringify({
+                    access_key: chave,
+                    subject: "Uma mensagem de " + dados.nome + " foi recebida.",
+                    from_name: "EVD - LANUM UFAL",
+                    ...camposEmail(dados)
+                })
+            });
+            const json = await resposta.json();
+            if (json.success) return json;
+            ultimoErro = new Error(json.message || "Falha ao enviar");
+        } catch (e) {
+            ultimoErro = e;
+        }
+    }
+    throw ultimoErro;
+}
 
 // --- LÓGICA DE INTERFACE (MOSTRAR/ESCONDER CAMPOS) ---
 document.getElementById('ultimaRefeicao').addEventListener('change', function() {
-    const valor = this.value;
-    const prazerContainer = document.getElementById('prazerosaContainer');
-    const familiarContainer = document.getElementById('familiarContainer');
     const perguntasPadrao = document.getElementById('perguntasPadrao');
-
-    // 1. Estado inicial (vazio ou ---) -> Esconde tudo
-    if (valor === "" || valor === "---") {
-        prazerContainer.style.display = 'none';
-        familiarContainer.style.display = 'none';
-        perguntasPadrao.style.display = 'none';
-    } 
-    // 2. Acabou de comer -> Mostra prazer/familiar e esconde fome
-    else if (valor === 'Jantar' || valor === 'Imediato') {
-        prazerContainer.style.display = 'block';
-        familiarContainer.style.display = 'block';
-        perguntasPadrao.style.display = 'none';
-    } 
-    // 3. Outros tempos -> Mostra fome e esconde prazer/familiar
-    else {
-        prazerContainer.style.display = 'none';
-        familiarContainer.style.display = 'none';
-        perguntasPadrao.style.display = 'block';
-    }
+    // Vazio ou "---" esconde as perguntas; qualquer tempo escolhido mostra
+    perguntasPadrao.style.display = (this.value === "" || this.value === "---") ? 'none' : 'block';
 });
 
 // --- LÓGICA CONDICIONAL: PERGUNTA EXTRA PARA ALMOÇO ---
@@ -52,7 +75,7 @@ document.getElementById('tipoRefeicao').addEventListener('change', function() {
     }
 });
 
-// --- EVENTO DE SUBMIT (ENVIO INTELIGENTE) ---
+// --- EVENTO DE SUBMIT ---
 document.getElementById('fomeForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -63,9 +86,8 @@ document.getElementById('fomeForm').addEventListener('submit', function(event) {
     btn.textContent = "Enviando... aguarde";
 
     const timing = document.getElementById('ultimaRefeicao').value;
-    const isImediato = (timing === 'Jantar' || timing === 'Imediato');
 
-    // 1. Criamos o objeto com os dados básicos
+    // Monta o objeto com as respostas
     const dados = {
         nome: document.getElementById('nome').value,
         hora: timing,
@@ -73,28 +95,15 @@ document.getElementById('fomeForm').addEventListener('submit', function(event) {
         consumiuAlmoco: (function() {
             const sel = document.querySelector('input[name="consumiuAlmoco"]:checked');
             return sel ? sel.value : 'N/A';
-        })()
+        })(),
+        fome: document.getElementById('fome').value,
+        cheio: document.getElementById('cheio').value,
+        desejo: document.getElementById('desejoComer').value,
+        capacidade: document.getElementById('consegueComer').value
     };
 
-    // 2. Filtramos as escalas baseado na escolha do usuário
-    if (isImediato) {
-        dados.fome = "N/A (Pós-refeição)";
-        dados.cheio = "N/A (Pós-refeição)";
-        dados.desejo = "N/A (Pós-refeição)";
-        dados.capacidade = "N/A (Pós-refeição)";
-        dados.prazerosa = document.getElementById('prazerosa').value;
-        dados.familiar = document.getElementById('familiar').value;
-    } else {
-        dados.fome = document.getElementById('fome').value;
-        dados.cheio = document.getElementById('cheio').value;
-        dados.desejo = document.getElementById('desejoComer').value;
-        dados.capacidade = document.getElementById('consegueComer').value;
-        dados.prazerosa = "Não informado";
-        dados.familiar = "Não informado";
-    }
-    
-    // 3. ENVIO REAL PELO EMAILJS
-    emailjs.send('service_l5eds5p', 'template_nuppf1f', dados)
+    // Envio real pelo Web3Forms
+    enviarEmail(dados)
         .then(() => {
             document.getElementById('nomeResposta').textContent = dados.nome;
             document.getElementById('formContainer').style.display = 'none';
@@ -102,7 +111,7 @@ document.getElementById('fomeForm').addEventListener('submit', function(event) {
         })
         .catch(err => {
             console.error("Erro no envio:", err);
-            alert("Erro ao enviar: " + JSON.stringify(err));
+            alert("Não foi possível enviar agora. Tente novamente em instantes.\n\n(" + (err.message || err) + ")");
             btn.disabled = false;
             btn.textContent = "Enviar Resposta";
         });
