@@ -9,7 +9,7 @@ function aceitarTermos() {
 // Cole aqui as Access Keys geradas em web3forms.com (uma por e-mail).
 // Se a primeira estourar o limite, o código tenta a próxima automaticamente.
 const CHAVES_WEB3FORMS = [
-    "de056186-5d10-4c51-b7e7-7fea9bbd6826",
+    "a96b457f-ca8e-437f-945e-4cb7b4a1ba5a",
     // "COLE_AQUI_A_CHAVE_2",
 ];
 
