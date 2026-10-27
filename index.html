@@ -8,7 +8,6 @@
   
   <link rel="stylesheet" href="style.css">
 
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -52,39 +51,6 @@
             <option value="240 minutos">240 minutos</option>
         </select>
     </div>
-
-    <!-- Escala de Prazerosa (visível condicionalmente) -->
-      <div class="form-group" id="prazerosaContainer" style="display: none;">
-        <div class="scale-header">
-          <label for="prazerosa">Quão prazerosa foi essa refeição?</label>
-          <span class="scale-explanation">Pense na satisfação e no prazer sensorial que você sentiu ao comer esses alimentos.</span>
-        </div>
-        <div class="slider-container">
-          <div class="slider-value" id="prazerosaValue">50</div>
-          <input type="range" id="prazerosa" min="0" max="100" step="0.1" value="50" oninput="document.getElementById('prazerosaValue').textContent = this.value">
-          <div class="slider-labels">
-            <span>Nada/Nenhuma</span>
-            <span>Excessiva(o)</span>
-          </div>
-        </div>
-      </div>
-
-
-      <!-- Escala de Familiaridade (visível condicionalmente) -->
-      <div class="form-group" id="familiarContainer" style="display: none;">
-        <div class="scale-header">
-          <label for="familiar">Quão familiar foi essa refeição?</label>
-          <span class="scale-explanation">Pense no quanto você está acostumado com esses alimentos e com o sabor dessa preparação.</span>
-        </div>
-        <div class="slider-container">
-          <div class="slider-value" id="familiarValue">50</div>
-          <input type="range" id="familiar" min="0" max="100" step="0.1" value="50" oninput="document.getElementById('familiarValue').textContent = this.value">
-          <div class="slider-labels">
-            <span>Nada/Nenhuma</span>
-            <span>Excessiva(o)</span>
-          </div>
-        </div>
-      </div>
 
     <div id="perguntasPadrao">
       <div class="form-group">
