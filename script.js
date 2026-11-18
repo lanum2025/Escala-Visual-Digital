@@ -4,7 +4,7 @@ function aceitarTermos() {
     if (modal) modal.style.display = 'none';
 }
 
-const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbyxI65qP7Duk_rQUbcpVfmHMFzMmfM25yHcQ9-fcEuBz8cb638WvGKAj8kk_b9wKwIjbw/exec";
+const URL_APPS_SCRIPT = "https://script.google.com/macros/library/d/1e7WAAiSFKJmkfz0rHA9xzgTlPR9hejS5gVNYorHntg51-t_B9gAio8bg/1";
 
 async function enviarEmail(dados) {
   const resposta = await fetch(URL_APPS_SCRIPT, {
