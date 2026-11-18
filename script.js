@@ -4,55 +4,18 @@ function aceitarTermos() {
     if (modal) modal.style.display = 'none';
 }
 
-
-// --- ENVIO DE E-MAIL (WEB3FORMS COM CHAVE RESERVA) ---
-// Cole aqui as Access Keys geradas em web3forms.com (uma por e-mail).
-// Se a primeira estourar o limite, o código tenta a próxima automaticamente.
-const CHAVES_WEB3FORMS = [
-    "a96b457f-ca8e-437f-945e-4cb7b4a1ba5a",
-    // "COLE_AQUI_A_CHAVE_2",
-];
-
-// Monta os campos do e-mail com as perguntas como rótulo, na ordem do template antigo.
-// O Web3Forms usa o nome de cada campo como título no e-mail.
-function camposEmail(d) {
-    return {
-        "Nome": d.nome,
-        "Quanto você está sentindo fome neste momento?": d.fome,
-        "O quão cheio você se sente agora?": d.cheio,
-        "O quanto você deseja comer agora?": d.desejo,
-        "Quanto você acha que consegue comer agora?": d.capacidade,
-        "Quando foi sua última refeição?": d.hora,
-        "Qual foi sua última refeição?": d.ultima,
-        "Consumiu algum alimento ou bebida após o almoço?": d.consumiuAlmoco
-    };
-}
+const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbyxI65qP7Duk_rQUbcpVfmHMFzMmfM25yHcQ9-fcEuBz8cb638WvGKAj8kk_b9wKwIjbw/exec";
 
 async function enviarEmail(dados) {
-    let ultimoErro = new Error("Nenhuma chave configurada");
-
-    for (const chave of CHAVES_WEB3FORMS) {
-        try {
-            const resposta = await fetch("https://api.web3forms.com/submit", {
-                method: "POST",
-                headers: { "Content-Type": "application/json", "Accept": "application/json" },
-                body: JSON.stringify({
-                    access_key: chave,
-                    subject: "Uma mensagem de " + dados.nome + " foi recebida.",
-                    from_name: "EVD - LANUM UFAL",
-                    ...camposEmail(dados)
-                })
-            });
-            const json = await resposta.json();
-            if (json.success) return json;
-            ultimoErro = new Error(json.message || "Falha ao enviar");
-        } catch (e) {
-            ultimoErro = e;
-        }
-    }
-    throw ultimoErro;
+  const resposta = await fetch(URL_APPS_SCRIPT, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(dados),
+  });
+  const json = await resposta.json();
+  if (!json.success) throw new Error(json.message || "Falha ao enviar");
+  return json;
 }
-
 // --- LÓGICA DE INTERFACE (MOSTRAR/ESCONDER CAMPOS) ---
 document.getElementById('ultimaRefeicao').addEventListener('change', function() {
     const perguntasPadrao = document.getElementById('perguntasPadrao');
